@@ -104,9 +104,20 @@ function updateCharts(){
     chart.update();
   });
 }
-
+/*
 function progress() {
   value = Math.min(Math.max(value + (0.1 - Math.random() / 5), -1), 1);
+  //console.log(value);
+  values.push({
+    x: new Date(),
+    y: value
+  });
+  values.shift();
+}
+*/
+function progress1() {
+  value = data;
+  //console.log(value);
   values.push({
     x: new Date(),
     y: value
@@ -120,15 +131,33 @@ function advance() {
     updateCharts();
   }
   
-  progress();
+  //progress();
+  progress1();
   updateCharts();
   
+  /*
   setTimeout(function() {
     requestAnimationFrame(advance);
   }, speed);
+  */
 }
 
 window.onload = function() {
   initialize();
   advance();
 };
+
+var data = 0;
+
+socket.on('new user', function(msg) {
+  console.log("new user!");
+});
+socket.on('new_data', function(msg) {
+  console.log("newdata!");
+
+  data = msg.cpu;
+  //update(msg);
+  setTimeout(function() {
+    requestAnimationFrame(advance);
+  }, speed);
+});
