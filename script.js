@@ -41,39 +41,8 @@ function initialize() {
         }],
         yAxes: [{
           ticks: {
-            max: 1,
-            min: -1
-          }
-        }]
-      }
-    }
-  }), new Chart(document.getElementById("chart1"), {
-    type: 'bar',
-    data: {
-      //labels: labels,
-      datasets: [{
-        data: values,
-        backgroundColor: 'rgba(255, 99, 132, 0.1)',
-        borderColor: 'rgb(255, 99, 132)',
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      animation: {
-        duration: speed * 1.5,
-        easing: 'linear'
-      },
-      legend: false,
-      scales: {
-        xAxes: [{
-          type: "time",
-          display: true
-        }],
-        yAxes: [{
-          ticks: {
-            max: 1,
-            min: -1
+            max: 200,
+            min: -50
           }
         }]
       }
@@ -115,7 +84,8 @@ function progress() {
   values.shift();
 }
 */
-function progress1() {
+var data = 0;
+function progress() {
   value = data;
   //console.log(value);
   values.push({
@@ -132,32 +102,17 @@ function advance() {
   }
   
   //progress();
-  progress1();
+  progress();
   updateCharts();
   
-  /*
+  
   setTimeout(function() {
     requestAnimationFrame(advance);
   }, speed);
-  */
+  
 }
 
 window.onload = function() {
   initialize();
   advance();
 };
-
-var data = 0;
-
-socket.on('new user', function(msg) {
-  console.log("new user!");
-});
-socket.on('new_data', function(msg) {
-  console.log("newdata!");
-
-  data = msg.cpu;
-  //update(msg);
-  setTimeout(function() {
-    requestAnimationFrame(advance);
-  }, speed);
-});
